@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
     private CharacterController characterController;
     private Vector3 currentLookTarget = Vector3.zero;
     private Animator anim;
+    private bool isAttacking = false;
 
 	// Use this for initialization
 	void Start ()
@@ -45,7 +46,35 @@ public class PlayerController : MonoBehaviour {
         // Space
         this.anim.SetBool("IsJump", Input.GetKey(KeyCode.Space));
 
-        this.anim.SetBool("SpinAttack", Input.GetMouseButton(0));
+        // Attacks
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            this.anim.SetInteger("Attack", 1);
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            this.anim.SetInteger("Attack", 2);
+        }
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            this.anim.SetInteger("Attack", 3);
+        }
+        else if (Input.GetKeyDown(KeyCode.J))
+        {
+            this.anim.SetInteger("Attack", 4);
+        }
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            this.anim.SetInteger("Attack", 5);
+        }
+        else if (Input.GetKeyDown(KeyCode.L))
+        {
+            this.anim.SetInteger("Attack", 6);
+        }
+        else
+        {
+            this.anim.SetInteger("Attack", 0);
+        }
     }
 
     void FixedUpdate()
