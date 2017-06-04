@@ -13,22 +13,23 @@ public class EnemyAttack : MonoBehaviour {
     private Animator anim;
     private GameObject player;
     private bool playerInRange;
-    private BoxCollider[] weaponColliders; 
+    private BoxCollider[] weaponColliders;
+    private EnemyHealth enemyHealth;
 
 	// Use this for initialization
 	void Start () {
         this.weaponColliders = GetComponentsInChildren<BoxCollider>();
         this.player = GameManager.instance.Player;
         this.anim = GetComponent<Animator>();
+        this.enemyHealth = GetComponent<EnemyHealth>();
         StartCoroutine(this.Attack());
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Vector3.Distance(this.transform.position, this.player.transform.position) < range)
+		if (Vector3.Distance(this.transform.position, this.player.transform.position) < range && this.enemyHealth.IsAlive)
         {
             this.playerInRange = true;
-            print("Is player in range " + this.playerInRange);
         }
         else
         {
@@ -47,5 +48,21 @@ public class EnemyAttack : MonoBehaviour {
         yield return null;
 
         StartCoroutine(this.Attack());
+    }
+
+    public void EnemyBeginAttack()
+    {
+        foreach (var weapon in weaponColliders)
+        {
+            weapon.enabled = true;
+        }
+    }
+
+    public void EnemyEndAttack()
+    {
+        foreach (var weapon in weaponColliders)
+        {
+            weapon.enabled = false;
+        }
     }
 }

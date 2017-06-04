@@ -14,17 +14,28 @@ public class PlayerController : MonoBehaviour {
     private Vector3 currentLookTarget = Vector3.zero;
     private Animator anim;
     private bool isAttacking = false;
+    private BoxCollider[] weaponColliders;
 
 	// Use this for initialization
 	void Start ()
     {
         this.characterController = this.GetComponent<CharacterController>();
         this.anim = this.GetComponent<Animator>();
+        this.weaponColliders = GetComponentsInChildren<BoxCollider>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if (GameManager.instance.IsGameOver)
+        {
+            this.anim.SetBool("IsWalking", false);
+            this.anim.SetBool("IsRunning", false);
+            this.anim.SetBool("IsJump", false);
+            this.characterController.enabled = false;
+            return;
+        }
+
         var moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         this.characterController.SimpleMove(moveDirection * this.moveSpeed);
 
@@ -59,7 +70,7 @@ public class PlayerController : MonoBehaviour {
         {
             this.anim.SetInteger("Attack", 3);
         }
-        else if (Input.GetKeyDown(KeyCode.J))
+        else if (Input.GetKeyDown(KeyCode.J) || Input.GetMouseButtonDown(0))
         {
             this.anim.SetInteger("Attack", 4);
         }
@@ -79,6 +90,11 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if(GameManager.instance.IsGameOver)
+        {
+            return;
+        }
+
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -94,6 +110,22 @@ public class PlayerController : MonoBehaviour {
             var rotation = Quaternion.LookRotation(targetPosition - transform.position);
 
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10f);
+        }
+    }
+
+    void OnStartWeaponAttack()
+    {
+        foreach (var weapon in this.weaponColliders)
+        {
+            weapon.enabled = true;
+        }
+    }
+
+    void OnEndWeaponAttack()
+    {
+        foreach (var weapon in this.weaponColliders)
+        {
+            weapon.enabled = false;
         }
     }
 }

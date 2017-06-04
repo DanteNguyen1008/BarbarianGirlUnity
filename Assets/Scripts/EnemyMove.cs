@@ -11,6 +11,7 @@ public class EnemyMove : MonoBehaviour
 
     private NavMeshAgent nav;
     private Animator anim;
+    private EnemyHealth enemyhealth;
 
     void Awake()
     {
@@ -21,10 +22,23 @@ public class EnemyMove : MonoBehaviour
     void Start () {
         this.anim = GetComponent<Animator>();
         this.nav = GetComponent<NavMeshAgent>();
+        this.enemyhealth = GetComponent<EnemyHealth>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        this.nav.SetDestination(this.player.position);
-	}
+        if(!GameManager.instance.IsGameOver && this.enemyhealth.IsAlive)
+        {
+            this.nav.SetDestination(this.player.position);
+        }
+        else if ((!GameManager.instance.IsGameOver || GameManager.instance.IsGameOver) && !this.enemyhealth.IsAlive)
+        {
+            this.nav.enabled = false;
+        }
+        else 
+        {
+            this.nav.enabled = false;
+            this.anim.Play("Idle");
+        }
+    }
 }
