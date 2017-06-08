@@ -28,6 +28,7 @@ public class EnemyHealth : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        GameManager.instance.RegisterEnemy(this);
         this._audio = GetComponent<AudioSource>();
         this._rigidBody = GetComponent<Rigidbody>();
         this.capsuleCollider = GetComponent<CapsuleCollider>();
@@ -82,6 +83,7 @@ public class EnemyHealth : MonoBehaviour {
 
     private void KillEnemy()
     {
+        GameManager.instance.KilledEnemy(this);
         this.capsuleCollider.enabled = false;
         this.nav.enabled = false;
         this.anim.SetTrigger("EnemyDie");

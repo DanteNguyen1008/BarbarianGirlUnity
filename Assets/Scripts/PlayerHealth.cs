@@ -23,6 +23,23 @@ public class PlayerHealth : MonoBehaviour {
     private AudioSource _audio;
     private ParticleSystem blood;
 
+    /// <summary>
+    /// Gets or sets the current health
+    /// </summary>
+    public int CurrentHealth
+    {
+        get { return this.currentHealth; }
+        set
+        {
+            if (value < 0)
+            {
+                this.currentHealth = 0;
+            }
+
+            this.currentHealth = value;
+        }
+    }
+
     void Awake()
     {
         Assert.IsNotNull(this.healthSlider);
@@ -53,6 +70,24 @@ public class PlayerHealth : MonoBehaviour {
                 this.timer = 0;
             }
         }
+    }
+
+    public void PowerUpHeath()
+    {
+        this.CurrentHealth += 40;
+
+        if (this.CurrentHealth > this.startingHealth)
+        {
+            this.CurrentHealth = this.startingHealth;
+        }
+
+        this.healthSlider.value = this.CurrentHealth;
+    }
+
+    public bool IsFullHealth ()
+    {
+        // the bigger condition is just sanity
+        return this.CurrentHealth >= this.startingHealth;
     }
 
     private void takeHit()

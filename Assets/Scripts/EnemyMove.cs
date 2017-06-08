@@ -6,20 +6,14 @@ using UnityEngine.AI;
 
 public class EnemyMove : MonoBehaviour
 {
-    [SerializeField]
-    Transform player;
-
+    private GameObject player;
     private NavMeshAgent nav;
     private Animator anim;
     private EnemyHealth enemyhealth;
 
-    void Awake()
-    {
-        Assert.IsNotNull(this.player);
-    }
-
     // Use this for initialization
     void Start () {
+        this.player = GameManager.instance.Player;
         this.anim = GetComponent<Animator>();
         this.nav = GetComponent<NavMeshAgent>();
         this.enemyhealth = GetComponent<EnemyHealth>();
@@ -29,7 +23,7 @@ public class EnemyMove : MonoBehaviour
 	void Update () {
         if(!GameManager.instance.IsGameOver && this.enemyhealth.IsAlive)
         {
-            this.nav.SetDestination(this.player.position);
+            this.nav.SetDestination(this.player.transform.position);
         }
         else if ((!GameManager.instance.IsGameOver || GameManager.instance.IsGameOver) && !this.enemyhealth.IsAlive)
         {
