@@ -2,17 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthPowerUp : MonoBehaviour {
-
-    private GameObject player;
+public class HealthPowerUp : SpawnObject
+{
     private PlayerHealth playerHealth;
-
-	// Use this for initialization
-	void Start () {
-        this.player = GameManager.instance.Player;
-        this.playerHealth = this.player.GetComponent<PlayerHealth>();
-        GameManager.instance.RegisterPowerUp();
-	}
 
     void OnTriggerEnter(Collider other)
     {
@@ -24,8 +16,20 @@ public class HealthPowerUp : MonoBehaviour {
         }
     }
 
-    void Update()
+    protected override void OnStart()
     {
-        this.transform.Rotate(0, 100 * Time.deltaTime, 0);
+        base.OnStart();
+        this.playerHealth = this.player.GetComponent<PlayerHealth>();
+        this.RegisterObject();
+    }
+
+    protected override void RegisterObject()
+    {
+        GameManager.instance.RegisterPowerUp();
+    }
+
+    protected override void UnRegisterObject()
+    {
+        GameManager.instance.UnRegisterPowerUp();
     }
 }

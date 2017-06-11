@@ -10,11 +10,24 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private LayerMask layerMask;
 
+    [SerializeField]
+    private GameObject weaponLeftHolder;
+        
+    [SerializeField]
+    private GameObject weaponRightHolder;
+
+    [SerializeField]
+    private GameObject leftWeaponModel;
+
+    [SerializeField]
+    private GameObject rightWeaponModel;
+
     private CharacterController characterController;
     private Vector3 currentLookTarget = Vector3.zero;
     private Animator anim;
     private bool isAttacking = false;
     private BoxCollider[] weaponColliders;
+    private GameObject leftWeapon, rightWeapon;
 
 	// Use this for initialization
 	void Start ()
@@ -22,6 +35,8 @@ public class PlayerController : MonoBehaviour {
         this.characterController = this.GetComponent<CharacterController>();
         this.anim = this.GetComponent<Animator>();
         this.weaponColliders = GetComponentsInChildren<BoxCollider>();
+
+        this.ReplaceWeapon(this.leftWeaponModel, this.rightWeaponModel);
 	}
 	
 	// Update is called once per frame
@@ -127,5 +142,28 @@ public class PlayerController : MonoBehaviour {
         {
             weapon.enabled = false;
         }
+    }
+
+    public void ReplaceWeapon(GameObject _leftWeapon, GameObject _rightWeapon)
+    {
+        // Remove old weapons
+        if(this.leftWeapon != null)
+        {
+            Destroy(this.leftWeapon);
+        }
+
+        if(this.rightWeapon != null)
+        {
+            Destroy(this.rightWeapon);
+        }
+
+        this.leftWeapon = Instantiate(_leftWeapon) as GameObject;
+        this.rightWeapon = Instantiate(_rightWeapon) as GameObject;
+
+        this.leftWeapon.transform.parent = this.weaponLeftHolder.transform;
+        this.leftWeapon.transform.localPosition = this.leftWeapon.transform.position;
+
+        this.rightWeapon.transform.parent = this.weaponRightHolder.transform;
+        this.rightWeapon.transform.localPosition = this.rightWeapon.transform.position;
     }
 }

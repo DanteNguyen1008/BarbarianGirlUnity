@@ -32,10 +32,13 @@ public class GameManager : MonoBehaviour {
     GameObject arrow;
 
     [SerializeField]
-    GameObject heathPowerUp;
+    GameObject[] powerUps;
 
     [SerializeField]
     int maxPowerUps = 4;
+
+    [SerializeField]
+    bool spawnMonster = true;
 
     private bool isGameOver = false;
     private int currentLevel;
@@ -44,8 +47,6 @@ public class GameManager : MonoBehaviour {
     private float powerUpSpawnTime = 5;
     private float currentPowerUpSpawnTime = 0;
     private int powerUpsCount = 0;
-
-    private GameObject newEnemy;
 
     private List<EnemyHealth> enemies = new List<EnemyHealth>();
     private List<EnemyHealth> killedEnemies = new List<EnemyHealth>();
@@ -66,8 +67,12 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () { 
-        StartCoroutine(this.Spawn());
-        StartCoroutine(this.SpawnPowerUp());
+        if (spawnMonster)
+        {
+            StartCoroutine(this.Spawn());
+            StartCoroutine(this.SpawnPowerUp());
+        }
+        
         this.currentLevel = 1;
         this.levelText.text = "Level " + this.currentLevel;
 	}
@@ -88,21 +93,25 @@ public class GameManager : MonoBehaviour {
                 var spawnLocation = this.spawnPoints[Random.Range(0, spawnPoints.Length - 1)];
 
                 int randomEnemy = Random.Range(0, 3);
+                GameObject newEnemy = null;
                 
                 if(randomEnemy == 0)
                 {
-                    this.newEnemy = Instantiate(soldier) as GameObject;
+                    newEnemy = Instantiate(soldier) as GameObject;
                 }
                 else if (randomEnemy == 1)
                 {
-                    this.newEnemy = Instantiate(tanker) as GameObject;
+                    newEnemy = Instantiate(tanker) as GameObject;
                 }
                 else if (randomEnemy == 2)
                 {
-                    this.newEnemy = Instantiate(ranger) as GameObject;
+                    newEnemy = Instantiate(ranger) as GameObject;
                 }
 
-                newEnemy.transform.position = spawnLocation.transform.position;
+                if(newEnemy != null)
+                {
+                    newEnemy.transform.position = spawnLocation.transform.position;
+                }
             }
 
             if (this.killedEnemies.Count == this.currentLevel * 2)
@@ -128,8 +137,8 @@ public class GameManager : MonoBehaviour {
             this.currentPowerUpSpawnTime = 0;
             if (this.powerUpsCount <= this.maxPowerUps)
             {
-                var powerUpSpawnLocation = this.powerUpPoints[Random.Range(0, powerUpPoints.Length - 1)];
-                var _powerUp = Instantiate(heathPowerUp);
+                var powerUpSpawnLocation = this.powerUpPoints[Random.Range(0, this.powerUpPoints.Length - 1)];
+                var _powerUp = Instantiate(this.powerUps[Random.Range(0, this.powerUps.Length - 1)]);
                 _powerUp.transform.position = powerUpSpawnLocation.transform.position;
             }
         }

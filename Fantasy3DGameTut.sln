@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fantasy3DGameTut.Plugins", "Fantasy3DGameTut.Plugins.csproj", "{0C7E5D82-0573-B4E7-FD1F-50403F2C2866}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fantasy3DGameTut", "Fantasy3DGameTut.csproj", "{A439E9A8-2B1B-1A3A-937B-9A9F8DC4C018}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fantasy3DGameTut.Editor.Plugins", "Fantasy3DGameTut.Editor.Plugins.csproj", "{7FE8CC4C-A535-E339-8521-B9B2DFC4BE86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C7E5D82-0573-B4E7-FD1F-50403F2C2866}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C7E5D82-0573-B4E7-FD1F-50403F2C2866}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C7E5D82-0573-B4E7-FD1F-50403F2C2866}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C7E5D82-0573-B4E7-FD1F-50403F2C2866}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A439E9A8-2B1B-1A3A-937B-9A9F8DC4C018}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A439E9A8-2B1B-1A3A-937B-9A9F8DC4C018}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A439E9A8-2B1B-1A3A-937B-9A9F8DC4C018}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A439E9A8-2B1B-1A3A-937B-9A9F8DC4C018}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FE8CC4C-A535-E339-8521-B9B2DFC4BE86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FE8CC4C-A535-E339-8521-B9B2DFC4BE86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FE8CC4C-A535-E339-8521-B9B2DFC4BE86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FE8CC4C-A535-E339-8521-B9B2DFC4BE86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
