@@ -2,12 +2,6 @@
 
 public class SwordSpawn : SpawnObject {
 
-    [SerializeField]
-    GameObject leftWeapon;
-
-    [SerializeField]
-    GameObject rightWeapon;
-
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == this.player)
@@ -16,7 +10,7 @@ public class SwordSpawn : SpawnObject {
 
             if(playerController != null)
             {
-                playerController.ReplaceWeapon(leftWeapon, rightWeapon);
+                playerController.ReplaceWeapon(this.tag);
             }
 
             this.UnRegisterObject();

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    private const string SWORD1TAG = "Sword1";
+    private const string SWORD2TAG = "Sword2";
+    private const string SWORD3TAG = "Sword3";
+    private const string SWORD4TAG = "Sword4";
+
     [SerializeField]
     private float moveSpeed = 10.0f;
 
@@ -17,10 +22,16 @@ public class PlayerController : MonoBehaviour {
     private GameObject weaponRightHolder;
 
     [SerializeField]
-    private GameObject leftWeaponModel;
+    private GameObject sword1ModelLeft, sword1ModelRight;
 
     [SerializeField]
-    private GameObject rightWeaponModel;
+    private GameObject sword2ModelLeft, sword2ModelRight;
+
+    [SerializeField]
+    private GameObject sword3ModelLeft, sword3ModelRight;
+
+    [SerializeField]
+    private GameObject sword4ModelLeft, sword4ModelRight;
 
     private CharacterController characterController;
     private Vector3 currentLookTarget = Vector3.zero;
@@ -36,7 +47,8 @@ public class PlayerController : MonoBehaviour {
         this.anim = this.GetComponent<Animator>();
         this.weaponColliders = GetComponentsInChildren<BoxCollider>();
 
-        this.ReplaceWeapon(this.leftWeaponModel, this.rightWeaponModel);
+        //// Use first weapon by default
+        this.ReplaceWeapon(this.sword1ModelLeft, this.sword1ModelRight);
 	}
 	
 	// Update is called once per frame
@@ -144,6 +156,26 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void ReplaceWeapon(string swordTag)
+    {
+        if(swordTag.Equals(SWORD1TAG))
+        {
+            this.ReplaceWeapon(this.sword1ModelLeft, this.sword1ModelRight);
+        }
+        else if (swordTag.Equals(SWORD2TAG))
+        {
+            this.ReplaceWeapon(this.sword2ModelLeft, this.sword2ModelRight);
+        }
+        else if (swordTag.Equals(SWORD3TAG))
+        {
+            this.ReplaceWeapon(this.sword3ModelLeft, this.sword3ModelRight);
+        }
+        else if (swordTag.Equals(SWORD4TAG))
+        {
+            this.ReplaceWeapon(this.sword4ModelLeft, this.sword4ModelRight);
+        }
+    }
+
     public void ReplaceWeapon(GameObject _leftWeapon, GameObject _rightWeapon)
     {
         // Remove old weapons
@@ -160,10 +192,13 @@ public class PlayerController : MonoBehaviour {
         this.leftWeapon = Instantiate(_leftWeapon) as GameObject;
         this.rightWeapon = Instantiate(_rightWeapon) as GameObject;
 
+        //// reset all local position and rotation to base and rotate the holder only
         this.leftWeapon.transform.parent = this.weaponLeftHolder.transform;
-        this.leftWeapon.transform.localPosition = this.leftWeapon.transform.position;
+        this.leftWeapon.transform.localPosition = new Vector3(0, 0, 0);
+        this.leftWeapon.transform.rotation = new Quaternion(0, 0, 0, 0);
 
         this.rightWeapon.transform.parent = this.weaponRightHolder.transform;
-        this.rightWeapon.transform.localPosition = this.rightWeapon.transform.position;
+        this.rightWeapon.transform.localPosition = new Vector3(0, 0, 0);
+        this.rightWeapon.transform.rotation = new Quaternion(0, 0, 0, 0);
     }
 }
